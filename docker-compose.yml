@@ -18,15 +18,6 @@ services:
       - mongo
     build: ./
     restart: unless-stopped
-  caddy:
-    image: caddy:latest
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
 #     ports:
 #       - 3000:3000
     environment:
@@ -37,6 +28,16 @@ services:
       - MONGODB_URL = <COMBINED CONNECTION STRING> 
     stdin_open: true
     tty: true
-
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
 volumes:
   db:
+  caddy_data:
+  caddy_config:
