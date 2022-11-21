@@ -10,14 +10,25 @@ router.get('/', async function(req, res, next) {
   *https"//mongodb.github.io/node-mongodb-native
   */
 
-  const filter = {'name': 'Sean Orner'
-};
+  const { MongoClient } = require('mongodb');
 
-const client = await MongoClient.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true});
-const call = client.db('418y').collection('students');
-const cursor = call.find(filter);
-const result = await cursor.toArray();
-await client.close();
+const url = 'mongodb://mongo:27017/';
+
+const dbName = '418y';
+const client = new MongoClient(url);    
+await client.connect();
+    console.log('Connected successfully to server');
+    const db = client.db(dbName);
+    const collection = db.collection('students');
+    
+    // Inserting an object
+    const insertResult = await collection.insertMany([{a:1}, {b:2}]);
+  
+    console.log('Inserted documents =>', insertResult);
+
+    // Filtering documents
+    const findResult = await collection.find({}).toArray();
+console.log(finalResult);
   res.render('index', { title: 'Express', people : ["tom"] });
 });
 
